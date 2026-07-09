@@ -29,7 +29,7 @@ Deschide `http://localhost:3000` și autentifică-te cu `ADMIN_EMAIL` și `ADMIN
 5. Start command: `npm start`
 6. După primul deploy rulează o singură dată `npm run seed` din Railway Shell.
 
-Scriptul de build execută automat `prisma generate`, `prisma migrate deploy` și `next build`.
+Scriptul de build execută `prisma generate` și `next build`. Migrațiile rulează la pornirea serviciului, în rețeaua privată Railway, înainte de `next start`.
 
 ## API
 
