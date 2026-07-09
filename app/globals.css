@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; }
+html { background: #f7f7f2; }
+body { margin: 0; color: #172126; background: #f7f7f2; }
+button, input, select, textarea { font: inherit; }
+input, select, textarea { width: 100%; border: 1px solid #d9deda; border-radius: .75rem; background: white; padding: .7rem .85rem; }
+label { display: grid; gap: .35rem; font-size: .875rem; font-weight: 600; }
+.card { border: 1px solid #e2e5e2; border-radius: 1rem; background: white; padding: 1rem; box-shadow: 0 1px 2px rgb(0 0 0 / .03); }
+.btn { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: .75rem; padding: .65rem 1rem; font-weight: 700; transition: .15s; }
+.btn-primary { background: #007782; color: white; }
+.btn-primary:hover { background: #00626b; }
+.btn-secondary { border: 1px solid #ccd4d1; background: white; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: .85rem; text-align: left; border-bottom: 1px solid #edf0ed; white-space: nowrap; }
+th { font-size: .75rem; color: #65736d; text-transform: uppercase; letter-spacing: .04em; }
+@media (max-width: 767px) { .desktop-table { display: none; } }
+@media (min-width: 768px) { .mobile-cards { display: none; } .card { padding: 1.25rem; } }

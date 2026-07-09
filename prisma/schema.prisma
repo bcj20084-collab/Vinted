@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Condition {
+  NEW
+  VERY_GOOD
+  GOOD
+  SATISFACTORY
+}
+
+enum ListingStatus {
+  DRAFT
+  ACTIVE
+  RESERVED
+  SOLD
+  REMOVED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id           String     @id @default(cuid())
+  name         String
+  brand        String?
+  category     String?
+  size         String?
+  condition    Condition?
+  costPrice    Decimal    @db.Decimal(10, 2)
+  purchaseDate DateTime?
+  notes        String?
+  imageUrl     String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  listings     Listing[]
+}
+
+model Listing {
+  id             String        @id @default(cuid())
+  product        Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId      String
+  listPrice      Decimal       @db.Decimal(10, 2)
+  status         ListingStatus @default(ACTIVE)
+  listedAt       DateTime      @default(now())
+  removedAt      DateTime?
+  viewsCount     Int?
+  favoritesCount Int?
+  sale           Sale?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Sale {
+  id                String   @id @default(cuid())
+  listing           Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  listingId         String   @unique
+  salePrice         Decimal  @db.Decimal(10, 2)
+  vintedFee         Decimal  @db.Decimal(10, 2)
+  shippingCost      Decimal? @db.Decimal(10, 2)
+  buyerPaidShipping Boolean  @default(true)
+  netProfit         Decimal  @db.Decimal(10, 2)
+  soldAt            DateTime @default(now())
+  createdAt         DateTime @default(now())
+}

@@ -1,0 +1,10 @@
+CREATE TYPE "Condition" AS ENUM ('NEW', 'VERY_GOOD', 'GOOD', 'SATISFACTORY');
+CREATE TYPE "ListingStatus" AS ENUM ('DRAFT', 'ACTIVE', 'RESERVED', 'SOLD', 'REMOVED');
+CREATE TABLE "User" ("id" TEXT NOT NULL, "email" TEXT NOT NULL, "password" TEXT NOT NULL, "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP, CONSTRAINT "User_pkey" PRIMARY KEY ("id"));
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE TABLE "Product" ("id" TEXT NOT NULL, "name" TEXT NOT NULL, "brand" TEXT, "category" TEXT, "size" TEXT, "condition" "Condition", "costPrice" DECIMAL(10,2) NOT NULL, "purchaseDate" TIMESTAMP(3), "notes" TEXT, "imageUrl" TEXT, "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP, "updatedAt" TIMESTAMP(3) NOT NULL, CONSTRAINT "Product_pkey" PRIMARY KEY ("id"));
+CREATE TABLE "Listing" ("id" TEXT NOT NULL, "productId" TEXT NOT NULL, "listPrice" DECIMAL(10,2) NOT NULL, "status" "ListingStatus" NOT NULL DEFAULT 'ACTIVE', "listedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP, "removedAt" TIMESTAMP(3), "viewsCount" INTEGER, "favoritesCount" INTEGER, "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP, "updatedAt" TIMESTAMP(3) NOT NULL, CONSTRAINT "Listing_pkey" PRIMARY KEY ("id"));
+CREATE TABLE "Sale" ("id" TEXT NOT NULL, "listingId" TEXT NOT NULL, "salePrice" DECIMAL(10,2) NOT NULL, "vintedFee" DECIMAL(10,2) NOT NULL, "shippingCost" DECIMAL(10,2), "buyerPaidShipping" BOOLEAN NOT NULL DEFAULT true, "netProfit" DECIMAL(10,2) NOT NULL, "soldAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP, "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP, CONSTRAINT "Sale_pkey" PRIMARY KEY ("id"));
+CREATE UNIQUE INDEX "Sale_listingId_key" ON "Sale"("listingId");
+ALTER TABLE "Listing" ADD CONSTRAINT "Listing_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Sale" ADD CONSTRAINT "Sale_listingId_fkey" FOREIGN KEY ("listingId") REFERENCES "Listing"("id") ON DELETE CASCADE ON UPDATE CASCADE;
