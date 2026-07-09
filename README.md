@@ -27,9 +27,9 @@ Deschide `http://localhost:3000` și autentifică-te cu `ADMIN_EMAIL` și `ADMIN
    - `ADMIN_EMAIL` și `ADMIN_PASSWORD`: folosite numai de scriptul seed.
 4. Build command: `npm run build`
 5. Start command: `npm start`
-6. După primul deploy rulează o singură dată `npm run seed` din Railway Shell.
+6. La fiecare pornire, serviciul aplică migrațiile și sincronizează automat contul admin din `ADMIN_EMAIL` și `ADMIN_PASSWORD`.
 
-Scriptul de build execută `prisma generate` și `next build`. Migrațiile rulează la pornirea serviciului, în rețeaua privată Railway, înainte de `next start`.
+Scriptul de build execută `prisma generate` și `next build`. Migrațiile și seed-ul admin rulează la pornirea serviciului, în rețeaua privată Railway, înainte de `next start`.
 
 ## API
 
